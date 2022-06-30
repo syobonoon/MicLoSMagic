@@ -1,0 +1,41 @@
+main: net.syobonoon.plugin.miclosmagic.MicLoSMagic
+name: MicLoSMagic
+version: ${project.version}
+
+commands:
+  dainaim:
+    description: You can get a magic.
+    permission: miclosmagic.dainaim
+    permission-message: You don't have <permission>
+    usage: /<command> MagicName [amount]
+  dainaimreload:
+    description: MicLoS Magic reload.
+    permission: miclosmagic.reload
+    permission-message: You don't have <permission>
+    usage: /<command>
+  dwand:
+    description: You can get a wand.
+    permission: miclosmagic.wand
+    permission-message: You don't have <permission>
+    usage: /<command>
+  dwandadmin:
+    description: You can get a admin wand.
+    permission: miclosmagic.adminwand
+    permission-message: You don't have <permission>
+    usage: /<command>
+    
+permissions:
+  miclosmagic.*:
+    children:
+      miclosmagic.wand: true
+      miclosmagic.adminwand: true
+      miclosmagic.dainaim: true
+      miclosmagic.reload: true
+  miclosmagic.wand:
+    default: true
+  miclosmagic.adminwand:
+    default: op
+  miclosmagic.dainaim:
+    default: op
+  miclosmagic.reload:
+    default: op

@@ -1,0 +1,81 @@
+ThunderGOD:
+  Setting:
+    custom_model: 1
+    attribution: "土"
+    magic_type: "普通魔法"
+    rare: -1
+    lore: "周囲の敵に雷と爆発のダメージが与える"
+    is_buff: False
+  Effect:
+    damage: 30
+    trigger_time: 0
+    target: multiple
+    range: 20
+    is_thunder: True
+    is_explosive: True
+    is_fire: True
+    fire_time: 10
+    time: 10
+    shot: single
+    projectiles_entity: Snowball
+    projectiles_amount: 8
+    projectiles_damage: 5
+    projectiles_velocity: 1
+  Visual:
+    trigger_time: 0
+    sound_type: null
+    sound_level: 1
+    sound_pitch: 1
+    particle_type: HEART
+    particle_animation: spiral
+    particle_speed: 1
+    particle_count: 5
+  Buff:
+    AttackUp:
+      trigger_time: 0
+      buff_amount: 5
+      time: 30
+    Invisible:
+      trigger_time: 0
+      time: 60
+      
+FrozenBall:
+  Setting:
+    custom_model: 2
+    attribution: "水"
+    magic_type: "普通魔法"
+    rare: 2
+    lore: "氷の球を8個投げることができる"
+    is_buff: False
+  Effect:
+    damage: 5
+    trigger_time: 0
+    target: single
+    range: 5
+    is_thunder: False
+    is_explosive: False
+    is_fire: False
+    fire_time: 0
+    time: 10
+    shot: single
+    projectiles_entity: Snowball
+    projectiles_amount: 8
+    projectiles_damage: 5
+    projectiles_velocity: 1
+  Visual:
+    trigger_time: 0
+    sound_type: null
+    sound_level: 1
+    sound_pitch: 1
+    particle_type: SNOW_SHOVEL
+    particle_animation: expand_wave
+    particle_speed: 1
+    particle_count: 5
+  Buff:
+    AttackUp:
+      trigger_time: 0
+      buff_amount: 5
+      time: 30
+    Invisible:
+      trigger_time: 0
+      time: 60
