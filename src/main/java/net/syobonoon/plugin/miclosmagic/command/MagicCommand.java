@@ -1,8 +1,10 @@
-package net.syobonoon.plugin.miclosmagic;
+package net.syobonoon.plugin.miclosmagic.command;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.syobonoon.plugin.miclosmagic.MicLoSMagic;
+import net.syobonoon.plugin.miclosmagic.config.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

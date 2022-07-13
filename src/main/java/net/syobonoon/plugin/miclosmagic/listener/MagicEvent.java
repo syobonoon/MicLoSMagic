@@ -1,8 +1,11 @@
-package net.syobonoon.plugin.miclosmagic;
+package net.syobonoon.plugin.miclosmagic.listener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.syobonoon.plugin.miclosmagic.magic.MagicOrbit;
+import net.syobonoon.plugin.miclosmagic.MicLoSMagic;
+import net.syobonoon.plugin.miclosmagic.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

@@ -1,4 +1,4 @@
-package net.syobonoon.plugin.miclosmagic;
+package net.syobonoon.plugin.miclosmagic.magic;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;

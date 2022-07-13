@@ -1,4 +1,4 @@
-package net.syobonoon.plugin.miclosmagic;
+package net.syobonoon.plugin.miclosmagic.config;
 
 import java.io.File;
 import java.io.IOException;

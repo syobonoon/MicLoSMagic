@@ -3,6 +3,9 @@ package net.syobonoon.plugin.miclosmagic;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.syobonoon.plugin.miclosmagic.command.MagicCommand;
+import net.syobonoon.plugin.miclosmagic.config.Config;
+import net.syobonoon.plugin.miclosmagic.listener.MagicEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
