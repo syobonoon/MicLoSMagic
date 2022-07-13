@@ -3,7 +3,7 @@ package net.syobonoon.plugin.miclosmagic.listener;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.syobonoon.plugin.miclosmagic.magic.MagicOrbit;
+import net.syobonoon.plugin.miclosmagic.magic.MagicEffect;
 import net.syobonoon.plugin.miclosmagic.MicLoSMagic;
 import net.syobonoon.plugin.miclosmagic.config.Config;
 import org.bukkit.Bukkit;
@@ -39,12 +39,12 @@ import org.bukkit.plugin.Plugin;
 public class MagicEvent implements Listener{
 	private List<String> magic_name_list = new ArrayList<String>(MicLoSMagic.config.getMagicItemStack().keySet());
 	private Plugin plugin;
-	private MagicOrbit mo;
+	private MagicEffect mo;
 
 	public MagicEvent(Plugin plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		this.plugin = plugin;
-		this.mo = new MagicOrbit(plugin);
+		this.mo = new MagicEffect(plugin);
 	}
 
 	//魔法の杖を使用する関数

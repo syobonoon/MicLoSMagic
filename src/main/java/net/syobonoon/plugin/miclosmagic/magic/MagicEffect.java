@@ -6,10 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class MagicOrbit{
+public class MagicEffect {
 	private Plugin plugin;
 
-	public MagicOrbit(Plugin plugin) {
+	public MagicEffect(Plugin plugin) {
 		this.plugin = plugin;
 	}
 
