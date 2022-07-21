@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-public class Config {
+public class ConfigManager {
 	private Plugin plugin;
 	private ItemStack magic_reset;
 	private FileConfiguration config = null;
@@ -35,7 +35,7 @@ public class Config {
 	public final static int MAGIC_RESET_GUI = 45; //魔法をリセットするインベントリ番号
 	public final static String MAGIC_RESET_NAME = "魔法リセット";
 
-	public Config(Plugin plugin) {
+	public ConfigManager(Plugin plugin) {
 		this.plugin = plugin;
 		load_config();
 		load_rare_color();

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.syobonoon.plugin.miclosmagic.magic.MagicEffect;
-import net.syobonoon.plugin.miclosmagic.MicLoSMagic;
-import net.syobonoon.plugin.miclosmagic.config.Config;
+import net.syobonoon.plugin.miclosmagic.MagicWorld;
+import net.syobonoon.plugin.miclosmagic.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -37,7 +37,7 @@ import org.bukkit.plugin.Plugin;
 
 
 public class MagicEvent implements Listener{
-	private List<String> magic_name_list = new ArrayList<String>(MicLoSMagic.config.getMagicItemStack().keySet());
+	private List<String> magic_name_list = new ArrayList<String>(MagicWorld.config.getMagicItemStack().keySet());
 	private Plugin plugin;
 	private MagicEffect mo;
 
@@ -65,8 +65,8 @@ public class MagicEvent implements Listener{
 			user_magic_name = ChatColor.stripColor(user_magicwand_lore.get(1)).replace("左：", "");
 
 			//魔法がセットされていなかったら
-			if (user_magic_name.equals(Config.MAGIC_NOTSET_MESSAGE)) {
-				p.sendMessage(ChatColor.GRAY+Config.MAGIC_NOTSET_MESSAGE);
+			if (user_magic_name.equals(ConfigManager.MAGIC_NOTSET_MESSAGE)) {
+				p.sendMessage(ChatColor.GRAY+ ConfigManager.MAGIC_NOTSET_MESSAGE);
 				return;
 			}
 			//魔法が存在しなかったら
@@ -78,8 +78,8 @@ public class MagicEvent implements Listener{
 			user_magic_name = ChatColor.stripColor(user_magicwand_lore.get(2)).replace("右：", "");
 
 			//魔法がセットされていなかったら
-			if (user_magic_name.equals(Config.MAGIC_NOTSET_MESSAGE)) {
-				p.sendMessage(ChatColor.GRAY+Config.MAGIC_NOTSET_MESSAGE);
+			if (user_magic_name.equals(ConfigManager.MAGIC_NOTSET_MESSAGE)) {
+				p.sendMessage(ChatColor.GRAY+ ConfigManager.MAGIC_NOTSET_MESSAGE);
 				return;
 			}
 			//魔法が存在しなかったら
@@ -97,7 +97,7 @@ public class MagicEvent implements Listener{
 	@EventHandler
 	public void onJoinRegisterConfig(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		MicLoSMagic.config.loadUUIDMagicConfig(p);
+		MagicWorld.config.loadUUIDMagicConfig(p);
 		return;
 	}
 
@@ -131,33 +131,33 @@ public class MagicEvent implements Listener{
 		if (MagicWandtype(e.getOffHandItem()) == -1) return;
 
 		e.setCancelled(true);
-		Inventory inv = Bukkit.createInventory(null, Config.MAX_GUI+1, Config.MAGIC_GUI);
+		Inventory inv = Bukkit.createInventory(null, ConfigManager.MAX_GUI+1, ConfigManager.MAGIC_GUI);
 
 		if (MagicWandtype(e.getOffHandItem()) == 1) {
 
 			int i = 0;
-			for (ItemStack magic_itemstack : MicLoSMagic.config.getUUIDMagicItemStack(p.getUniqueId())) {
+			for (ItemStack magic_itemstack : MagicWorld.config.getUUIDMagicItemStack(p.getUniqueId())) {
 
-				if (i > Config.MAX_GUI) break;
+				if (i > ConfigManager.MAX_GUI) break;
 				inv.setItem(i, magic_itemstack);
 				i++;
 			}
 
-			inv.setItem(Config.MAGIC_RESET_GUI, MicLoSMagic.config.getMagicReset()); //魔法リセットアイテムをセット
+			inv.setItem(ConfigManager.MAGIC_RESET_GUI, MagicWorld.config.getMagicReset()); //魔法リセットアイテムをセット
 			p.openInventory(inv);
 			return;
 		}
 		else if (MagicWandtype(e.getOffHandItem()) == 2) {
 
 			int i = 0;
-			for (ItemStack magic_itemstack : MicLoSMagic.config.getMagicItemStack().values()) {
+			for (ItemStack magic_itemstack : MagicWorld.config.getMagicItemStack().values()) {
 
-				if (i > Config.MAX_GUI) break;
+				if (i > ConfigManager.MAX_GUI) break;
 				inv.setItem(i, magic_itemstack);//魔法一覧のhashmapからセットする
 				i++;
 			}
 
-			inv.setItem(Config.MAGIC_RESET_GUI, MicLoSMagic.config.getMagicReset()); //魔法リセットアイテムをセット
+			inv.setItem(ConfigManager.MAGIC_RESET_GUI, MagicWorld.config.getMagicReset()); //魔法リセットアイテムをセット
 			p.openInventory(inv);
 			return;
 		}
@@ -167,7 +167,7 @@ public class MagicEvent implements Listener{
 	//ログアウトしたときにUUID.ymlを保存する関数
 	@EventHandler
 	public void quitsave(PlayerQuitEvent e) {
-		MicLoSMagic.config.saveUUIDMagicConfig(e.getPlayer().getUniqueId());
+		MagicWorld.config.saveUUIDMagicConfig(e.getPlayer().getUniqueId());
 	}
 
 	//Fキーを押したときに魔法を登録する関数
@@ -182,12 +182,12 @@ public class MagicEvent implements Listener{
 		String magic_name_colored = magic_item.getItemMeta().getDisplayName();
 
 		//すでに覚えていたら
-		if (MicLoSMagic.config.isRememberMagic(p.getUniqueId(), ChatColor.stripColor(magic_name_colored))) {
+		if (MagicWorld.config.isRememberMagic(p.getUniqueId(), ChatColor.stripColor(magic_name_colored))) {
 			p.sendMessage(ChatColor.RED+"すでに魔法"+magic_name_colored+ChatColor.RED+"は覚えています");
 			return;
 		}
 
-		MicLoSMagic.config.setUUIDMagicRegister(p.getUniqueId(), ChatColor.stripColor(magic_name_colored)); //UUID.ymlに魔法の登録
+		MagicWorld.config.setUUIDMagicRegister(p.getUniqueId(), ChatColor.stripColor(magic_name_colored)); //UUID.ymlに魔法の登録
 
 		//プレイヤーの手持ちの魔法を減らす
 		int magic_item_amount = magic_item.getAmount();
@@ -212,12 +212,12 @@ public class MagicEvent implements Listener{
 		if (!(e.isLeftClick() || e.isRightClick())) return;
 
 		//魔法設定GUIではなかった場合
-		if (!e.getView().getTitle().equals(Config.MAGIC_GUI)) return;
+		if (!e.getView().getTitle().equals(ConfigManager.MAGIC_GUI)) return;
 
 		e.setCancelled(true);//魔法設定GUIでは全てのアイテムの移動を禁止する
 
 		//魔法設定GUIではないところをクリックした場合
-		if (!(0 <= e.getRawSlot() && e.getRawSlot() <= Config.MAX_GUI)) return;
+		if (!(0 <= e.getRawSlot() && e.getRawSlot() <= ConfigManager.MAX_GUI)) return;
 
 		//魔法の杖ではなかった場合
 		ItemStack selected_wand_item = p.getInventory().getItemInMainHand();
@@ -236,9 +236,9 @@ public class MagicEvent implements Listener{
 		List<String> lore_update = selected_wand_itemMeta.getLore();
 
 		//魔法リセットをクリックした場合
-		if (user_magic_name.equals(Config.MAGIC_RESET_NAME)) {
-			lore_update.set(1, ChatColor.WHITE+"左："+Config.MAGIC_NOTSET_MESSAGE);
-			lore_update.set(2, ChatColor.WHITE+"右："+Config.MAGIC_NOTSET_MESSAGE);
+		if (user_magic_name.equals(ConfigManager.MAGIC_RESET_NAME)) {
+			lore_update.set(1, ChatColor.WHITE+"左："+ ConfigManager.MAGIC_NOTSET_MESSAGE);
+			lore_update.set(2, ChatColor.WHITE+"右："+ ConfigManager.MAGIC_NOTSET_MESSAGE);
 			selected_wand_itemMeta.setLore(lore_update);
 			selected_wand_item.setItemMeta(selected_wand_itemMeta);
 			p.sendMessage(ChatColor.GRAY+"魔法を取り外しました");
@@ -275,7 +275,7 @@ public class MagicEvent implements Listener{
 		if (!isMagicProjectiles(projectiles)) return;
 
 		//メタデータから魔法の飛翔物の攻撃力を取り出す処理
-		MetadataValue projectilesMeta = getMetaValue(projectiles.getMetadata(Config.MAGIC_KEY));
+		MetadataValue projectilesMeta = getMetaValue(projectiles.getMetadata(ConfigManager.MAGIC_KEY));
 		int projectiles_damage = (int)projectilesMeta.value();
 
 		if (projectiles instanceof Snowball) {
@@ -301,7 +301,7 @@ public class MagicEvent implements Listener{
 
 	//魔法による飛翔物かどうか確認する関数
 	private boolean isMagicProjectiles(Entity entity) {
-		return entity.hasMetadata(Config.MAGIC_KEY);
+		return entity.hasMetadata(ConfigManager.MAGIC_KEY);
 	}
 
 	//ItemStackが魔法かどうかを判定する関数
@@ -309,7 +309,7 @@ public class MagicEvent implements Listener{
 		if(user_magic == null || user_magic.getType() == Material.AIR) return false;
 
 		//魔法、カスタムモデル
-		if (!user_magic.getType().equals(Config.MAGIC_BOOK) || !user_magic.getItemMeta().hasCustomModelData()) return false;
+		if (!user_magic.getType().equals(ConfigManager.MAGIC_BOOK) || !user_magic.getItemMeta().hasCustomModelData()) return false;
 		return true;
 	}
 
@@ -317,7 +317,7 @@ public class MagicEvent implements Listener{
 	private int MagicWandtype(ItemStack user_magicwand) {
 		if(user_magicwand == null || user_magicwand.getType() == Material.AIR) return -1;
 
-		if (!user_magicwand.getType().equals(Config.MAGIC_WAND)) return -1;
+		if (!user_magicwand.getType().equals(ConfigManager.MAGIC_WAND)) return -1;
 		if (user_magicwand.getItemMeta().getCustomModelData() == 1) return 1;
 		if (user_magicwand.getItemMeta().getCustomModelData() == 2) return 2;
 		return -1;
@@ -330,7 +330,7 @@ public class MagicEvent implements Listener{
 				Location loc_p = p.getEyeLocation();
 				loc_p.setYaw(loc_p.getYaw()+(360.0F/projectiles_amount) * projectiles_angle);
 				Snowball snowball = loc_p.getWorld().spawn(loc_p.add(loc_p.getDirection()), Snowball.class);
-				snowball.setMetadata(Config.MAGIC_KEY, new FixedMetadataValue(this.plugin, projectiles_damage));
+				snowball.setMetadata(ConfigManager.MAGIC_KEY, new FixedMetadataValue(this.plugin, projectiles_damage));
 				snowball.setVelocity(loc_p.getDirection().multiply(projectiles_velocity));
 				snowball.setShooter(p);
 				if (!particle_type.equals("null")) run_particle_animation(p, particle_animation, particle_type);
@@ -365,19 +365,19 @@ public class MagicEvent implements Listener{
 
 	//魔法を実行する関数
 	private void excute_magic(String user_magic_name, Player p) {
-		int range = MicLoSMagic.config.getInt(user_magic_name+".Effect.range");//魔法の範囲
-		int damage = MicLoSMagic.config.getInt(user_magic_name+".Effect.damage");//魔法の攻撃力
-		String target = MicLoSMagic.config.getString(user_magic_name+".Effect.target");//ターゲットが単体か複数か
-		Boolean is_thunder = MicLoSMagic.config.getBoolean(user_magic_name+".Effect.is_thunder");//雷
-		Boolean is_explosive = MicLoSMagic.config.getBoolean(user_magic_name+".Effect.is_explosive");//爆発
-		Boolean is_fire = MicLoSMagic.config.getBoolean(user_magic_name+".Effect.is_fire");//火
-		int fire_time = MicLoSMagic.config.getInt(user_magic_name+".Effect.fire_time");//燃え続ける時間
-		String projectiles_entity = MicLoSMagic.config.getString(user_magic_name+".Effect.projectiles_entity");//飛翔物の種類
-		int projectiles_amount = MicLoSMagic.config.getInt(user_magic_name+".Effect.projectiles_amount");//飛翔物の個数
-		int projectiles_damage = MicLoSMagic.config.getInt(user_magic_name+".Effect.projectiles_damage");//飛翔物のダメージ
-		int projectiles_velocity = MicLoSMagic.config.getInt(user_magic_name+".Effect.projectiles_velocity");//飛翔物の速度
-		String particle_type = MicLoSMagic.config.getString(user_magic_name+".Visual.particle_type");//パーティクルの種類
-		String particle_animation = MicLoSMagic.config.getString(user_magic_name+".Visual.particle_animation");//パーティクルのアニメーション
+		int range = MagicWorld.config.getInt(user_magic_name+".Effect.range");//魔法の範囲
+		int damage = MagicWorld.config.getInt(user_magic_name+".Effect.damage");//魔法の攻撃力
+		String target = MagicWorld.config.getString(user_magic_name+".Effect.target");//ターゲットが単体か複数か
+		Boolean is_thunder = MagicWorld.config.getBoolean(user_magic_name+".Effect.is_thunder");//雷
+		Boolean is_explosive = MagicWorld.config.getBoolean(user_magic_name+".Effect.is_explosive");//爆発
+		Boolean is_fire = MagicWorld.config.getBoolean(user_magic_name+".Effect.is_fire");//火
+		int fire_time = MagicWorld.config.getInt(user_magic_name+".Effect.fire_time");//燃え続ける時間
+		String projectiles_entity = MagicWorld.config.getString(user_magic_name+".Effect.projectiles_entity");//飛翔物の種類
+		int projectiles_amount = MagicWorld.config.getInt(user_magic_name+".Effect.projectiles_amount");//飛翔物の個数
+		int projectiles_damage = MagicWorld.config.getInt(user_magic_name+".Effect.projectiles_damage");//飛翔物のダメージ
+		int projectiles_velocity = MagicWorld.config.getInt(user_magic_name+".Effect.projectiles_velocity");//飛翔物の速度
+		String particle_type = MagicWorld.config.getString(user_magic_name+".Visual.particle_type");//パーティクルの種類
+		String particle_animation = MagicWorld.config.getString(user_magic_name+".Visual.particle_animation");//パーティクルのアニメーション
 
 		//飛翔物を発射する
 		if (!projectiles_entity.equals("null") && projectiles_amount <= 360) {

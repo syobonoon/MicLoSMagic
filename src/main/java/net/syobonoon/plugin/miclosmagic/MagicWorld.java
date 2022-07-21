@@ -3,24 +3,21 @@ package net.syobonoon.plugin.miclosmagic;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.syobonoon.plugin.miclosmagic.command.MagicCommand;
-import net.syobonoon.plugin.miclosmagic.config.Config;
+import net.syobonoon.plugin.miclosmagic.command.MagicCommandMaster;
+import net.syobonoon.plugin.miclosmagic.config.ConfigManager;
 import net.syobonoon.plugin.miclosmagic.listener.MagicEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MicLoSMagic extends JavaPlugin {
-	public static Config config;
+public class MagicWorld extends JavaPlugin {
+	public static ConfigManager configManager;
 
 	@Override
 	public void onEnable() {
-		config = new Config(this);
+		configManager = new ConfigManager(this);
 		new MagicEvent(this);
-		getCommand("dainaim").setExecutor(new MagicCommand());
-		getCommand("dainaimreload").setExecutor(new MagicCommand());
-		getCommand("dwand").setExecutor(new MagicCommand());
-		getCommand("dwandadmin").setExecutor(new MagicCommand());
+		getCommand("magic").setExecutor(new MagicCommandMaster());
 
 		allPlayerLoadConfig();
 		getLogger().info("onEnable");
@@ -36,7 +33,7 @@ public class MicLoSMagic extends JavaPlugin {
 	public void allPlayerSaveConfig() {
 		List<Player> online_players = new ArrayList<>(Bukkit.getOnlinePlayers());
 		for (Player online_player : online_players) {
-			config.saveUUIDMagicConfig(online_player.getUniqueId());
+			configManager.saveUUIDMagicConfig(online_player.getUniqueId());
 		}
 	}
 
@@ -44,7 +41,7 @@ public class MicLoSMagic extends JavaPlugin {
 	public void allPlayerLoadConfig() {
 		List<Player> online_players = new ArrayList<>(Bukkit.getOnlinePlayers());
 		for (Player online_player : online_players) {
-			config.loadUUIDMagicConfig(online_player);
+			configManager.loadUUIDMagicConfig(online_player);
 		}
 	}
 
