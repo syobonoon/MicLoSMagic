@@ -36,12 +36,12 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 
-public class MagicEvent implements Listener{
+public class MagicListener implements Listener{
 	private List<String> magic_name_list = new ArrayList<String>(MagicWorld.config.getMagicItemStack().keySet());
 	private Plugin plugin;
 	private MagicEffect mo;
 
-	public MagicEvent(Plugin plugin) {
+	public MagicListener(Plugin plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		this.plugin = plugin;
 		this.mo = new MagicEffect(plugin);

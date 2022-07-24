@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.syobonoon.plugin.miclosmagic.command.MagicCommandMaster;
 import net.syobonoon.plugin.miclosmagic.config.ConfigManager;
-import net.syobonoon.plugin.miclosmagic.listener.MagicEvent;
+import net.syobonoon.plugin.miclosmagic.listener.MagicListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +16,7 @@ public class MagicWorld extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		configManager = new ConfigManager(this);
-		new MagicEvent(this);
+		new MagicListener(this);
 		getCommand("magic").setExecutor(new MagicCommandMaster());
 
 		allPlayerLoadConfig();

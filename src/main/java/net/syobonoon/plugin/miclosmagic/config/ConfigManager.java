@@ -30,7 +30,6 @@ public class ConfigManager {
 	public final static String MAGIC_GUI = "Magic GUI";
 	public final static String MAGIC_ADMIN_GUI = "Magic ADMIN GUI";
 	public final static String MAGIC_KEY = "magicIdentifer";
-	public final static String MAGIC_NOTSET_MESSAGE = "魔法がセットされていません";
 	public final static int MAX_GUI = 53;
 	public final static int MAGIC_RESET_GUI = 45; //魔法をリセットするインベントリ番号
 	public final static String MAGIC_RESET_NAME = "魔法リセット";
@@ -202,19 +201,4 @@ public class ConfigManager {
 
 		setUUIDMagicMap(p.getUniqueId(), userconfig); //現在鯖にいるプレイヤーのmapに追加
 	}
-
-	//属性に応じた色
-	public HashMap<String, ChatColor> getMagicAttributionColor(){
-		return this.magic_attribution_color;
-	}
-
-	//魔法名と魔法のItemStackのリスト
-	public HashMap<String, ItemStack> getMagicItemStack() {
-		return this.magic_itemstack;
-	}
-
-	//テストメッセージを送る関数
-    public void sendTestMessage(String test_str) {
-    	plugin.getServer().broadcastMessage(ChatColor.AQUA+test_str);
-    }
 }
